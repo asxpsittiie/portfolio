@@ -1,0 +1,109 @@
+---
+const links = [
+  { name: 'Skills', href: '#skills' },
+  { name: 'Work', href: '#projects' },
+  { name: 'Contact', href: '#contact' }
+];
+---
+
+<nav class="nav-wrapper">
+  <div id="nav-bubble" class="bubble"></div>
+  
+  <ul class="nav-list">
+    {links.map((link) => (
+      <li>
+        <a href={link.href} class="nav-item">{link.name}</a>
+      </li>
+    ))}
+  </ul>
+
+  <svg class="gooey-svg">
+    <defs>
+      <filter id="gooey-effect">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
+      </filter>
+    </defs>
+  </svg>
+</nav>
+
+<script>
+  const bubble = document.getElementById('nav-bubble');
+  const items = document.querySelectorAll('.nav-item');
+  const wrapper = document.querySelector('.nav-wrapper');
+
+  items.forEach(item => {
+    item.addEventListener('mouseenter', (e) => {
+      const target = e.target as HTMLElement;
+      const rect = target.getBoundingClientRect();
+      const parentRect = wrapper.getBoundingClientRect();
+
+      if (bubble) {
+        // Position the bubble exactly behind the text
+        bubble.style.width = `${rect.width}px`;
+        bubble.style.height = `${rect.height}px`;
+        bubble.style.left = `${rect.left - parentRect.left}px`;
+        bubble.style.top = `${rect.top - parentRect.top}px`;
+        bubble.style.transform = "scale(1.2)"; // Make it slightly larger than text
+        bubble.style.opacity = "1";
+      }
+    });
+  });
+
+  wrapper.addEventListener('mouseleave', () => {
+    if (bubble) {
+      bubble.style.opacity = "0";
+      bubble.style.transform = "scale(0)"; // Shrink away
+    }
+  });
+</script>
+
+<style>
+  .nav-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.05); /* Slight visible background */
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Force light mode visibility */
+  :global(html.light) .nav-wrapper {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-list {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 10; /* Text stays ABOVE the bubble */
+  }
+
+  .nav-item {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 600;
+    padding: 0.6rem 1rem;
+    display: block;
+    transition: color 0.3s;
+  }
+
+  .bubble {
+    position: absolute;
+    background: var(--accent-color);
+    border-radius: 50px;
+    filter: url('#gooey-effect'); /* The liquid magic */
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none; /* Mouse ignores the bubble so it can click the link */
+  }
+
+  .gooey-svg { width: 0; height: 0; position: absolute; }
+</style>

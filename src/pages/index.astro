@@ -1,0 +1,173 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import ProjectModal from '../components/ProjectModal.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+// Animation Components
+import LogoLoop from '../components/animations/LogoLoop.astro'; 
+import GooeyNav from '../components/animations/GooeyNav.astro';
+import Lanyard from '../components/animations/Lanyard.jsx';
+import AuroraAbout from '../components/animations/AuroraAbout.astro';
+
+// Data & Styles
+import projects from '../data/projects.json';
+import '../styles/global.css';
+---
+
+<Layout title="Sittimae | Portfolio">
+	<header class="navbar">
+		<nav class="nav-container">
+			<div class="logo">Sittimae.</div>
+			<div class="nav-right">
+				<GooeyNav /> 
+				<div class="toggle-wrapper">
+					<ThemeToggle />
+				</div>
+			</div>
+		</nav>
+	</header>
+
+	<main>
+		<section class="hero" data-aos="fade-up">
+    <div class="badge mx-auto mb-6">Aspiring IT Professional</div>
+
+    <h1 class="text-6xl md:text-8xl font-bold mb-8">
+        Hi, I'm <span class="text-gradient">Sittimae</span>
+    </h1>
+
+    <div class="velocity-container">
+    <div class="velocity-track">
+        <span class="velocity-item">LEVEL: 4th-year</span>
+        <span class="velocity-item">MAJOR: IT Student</span>
+        <span class="velocity-item">INST: WMSU</span>
+        <span class="velocity-item">FOCUS: Data Analytics</span>
+        <span class="velocity-item">SPEC: reliable systems</span>
+        <span class="velocity-item">LEVEL: 4th-year</span>
+        <span class="velocity-item">MAJOR: IT Student</span>
+        <span class="velocity-item">INST: WMSU</span>
+        <span class="velocity-item">FOCUS: Data Analytics</span>
+        <span class="velocity-item">SPEC: reliable systems</span>
+    </div>
+</div>
+</section>
+
+		<div class="lanyard-wrapper">
+			<Lanyard client:only="react" /> 
+		</div>
+
+	<section class="section about-container">
+    <h2>About Me</h2>
+    <div class="aurora-bubble">
+        <p class="about-text">
+            As a <strong>fourth-year Information Technology student</strong> at 
+            <strong>Western Mindanao State University</strong>, I specialize in 
+            transforming complex data into reliable systems. 
+            <br><br>
+            My journey—from developing the <strong>3D Mags</strong> architecture platform 
+            to engineering <strong>GymBuddy’s</strong> AI-driven workout tracking—has 
+            fueled my passion for <strong>System Documentation</strong> and 
+            <strong>Data Analytics</strong>. I don't just build applications; 
+            I ensure they are well-documented, rigorously tested, and 
+            ready for real-world impact.
+        </p>
+    </div>
+</section>
+
+		<section id="skills" class="section">
+			<h2>Technical Skills</h2>
+			<div class="skills-grid">
+				<div class="card skill-box" data-aos="fade-up">
+					<h3>Frontend & Frameworks</h3>
+					<div class="tech-stack">
+						<span>Astro</span> <span>Figma</span> <span>Tailwind CSS</span>
+					</div>
+				</div>
+				<div class="card skill-box" data-aos="fade-up" data-aos-delay="100">
+					<h3>Machine Learning</h3>
+					<div class="tech-stack">
+						<span>YOLOv8</span> <span>LSTM</span> <span>Python</span> <span>MediaPipe</span>
+					</div>
+				</div>
+				<div class="card skill-box" data-aos="fade-up" data-aos-delay="200">
+					<h3>Documentation & Testing</h3>
+					<div class="tech-stack">
+						<span>System Testing</span> <span>Microsoft Excel</span> <span>Technical Writing</span>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="projects" class="section">
+			<h2>Featured Work</h2>
+			<div class="projects-grid">
+				{projects.map((project, index) => (
+					<ProjectCard 
+						id={project.id}
+						category={project.category}
+						title={project.title}
+						description={project.description}
+						tech={project.tech}
+						delay={index * 100}
+					/>
+				))}
+			</div>
+		</section>
+
+		<section class="footer-contact" id="contact">
+    <div class="contact-content">
+        <h2>Let's Connect</h2>
+        <p class="contact-phrase">
+            I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
+        </p>
+    </div>
+    
+    <div class="velocity-container social-loop">
+        <div class="velocity-track">
+            <a href="https://github.com/asxpsittiie" target="_blank" class="social-bubble"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/sittimae-muhadalam-8b2473394" target="_blank" class="social-bubble"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.facebook.com/Sittimae.Muhadalam" target="_blank" class="social-bubble"><i class="fab fa-facebook"></i></a>
+            <a href="mailto:sitiimuhadalam@gmail.com" class="social-bubble"><i class="fas fa-envelope"></i></a>
+            
+            <a href="https://github.com/asxpsittiie" target="_blank" class="social-bubble"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/sittimae-muhadalam-8b2473394" target="_blank" class="social-bubble"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.facebook.com/Sittimae.Muhadalam" target="_blank" class="social-bubble"><i class="fab fa-facebook"></i></a>
+            <a href="mailto:sitiimuhadalam@gmail.com" class="social-bubble"><i class="fas fa-envelope"></i></a>
+        </div>
+    </div>
+</section>
+		<ProjectModal />
+	</main>
+</Layout>
+
+<style>
+	/* Keep only layout-specific positioning here */
+	.lanyard-wrapper {
+		width: 100%;
+		height: 600px;
+		margin-top: -100px;
+		margin-bottom: 50px;
+		position: relative;
+		z-index: 10;
+	}
+
+	.skill-box {
+		background: var(--bg-secondary);
+		border: 1px solid var(--border-color);
+		transition: all 0.3s ease;
+	}
+	
+	.skill-box:hover {
+		border-color: var(--accent-color);
+		transform: translateY(-5px);
+		box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.3);
+	}
+
+	.contact-phrase {
+		color: var(--text-secondary);
+		font-size: 1.1rem;
+		max-width: 500px;
+		margin: -1.5rem auto 1rem auto;
+		line-height: 1.6;
+	}
+</style>

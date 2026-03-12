@@ -1,0 +1,13 @@
+---
+const { id, category, title, description, delay } = Astro.props;
+---
+
+<div class="card project-card" data-aos="zoom-in" data-aos-delay={delay} onclick={`openProject('${id}')`}>
+    <span class="category">{category}</span>
+    <h3>{title}</h3>
+    <p>{description}</p>
+    
+    <div class="view-more-wrapper">
+        <span class="view-more-btn">View Project →</span>
+    </div>
+</div>

@@ -1,0 +1,178 @@
+---
+// Step 4: Import the data so we can use it in the component
+import projects from '../data/projects.json';
+---
+
+<div id="project-modal" class="modal" onclick="closeModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img id="modal-img" src="" alt="Preview">
+    
+    <div class="modal-header">
+        <h2 id="modal-title"></h2>
+        <span id="modal-year" class="year-badge"></span>
+    </div>
+
+    <div class="modal-info">
+        <p><strong>Role:</strong> <span id="modal-role"></span></p>
+        <p><strong>Stack:</strong> <span id="modal-tools"></span></p>
+    </div>
+
+    <p id="modal-desc"></p>
+    
+    <div class="modal-links">
+      <a id="modal-link" href="" target="_blank" class="btn"></a>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Styles remain here for component scoping, but use your global variables */
+  .modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  html.light .modal {
+    background: rgba(248, 250, 252, 0.8);
+  }
+
+  .modal-content {
+    background: #1e293b; /* Matches your dark theme */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 24px;
+    max-width: 600px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    animation: popIn 0.3s ease-out;
+  }
+
+  html.light .modal-content {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .modal-content img {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    object-fit: cover;
+    height: 300px;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .modal-content h2 {
+    color: #ffffff;
+    margin: 0;
+    font-size: 2rem;
+  }
+
+  html.light .modal-content h2 { color: #1e293b; }
+
+  .year-badge {
+    background: rgba(99, 102, 241, 0.1);
+    color: #818cf8;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .modal-info {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  html.light .modal-info { background: rgba(0, 0, 0, 0.03); }
+
+  .modal-info p { margin: 0.3rem 0; color: #cbd5e1; }
+  html.light .modal-info p { color: #475569; }
+  .modal-info strong { color: #818cf8; }
+
+  .modal-content p#modal-desc {
+    color: #94a3b8;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+
+  html.light .modal-content p#modal-desc { color: #64748b; }
+
+  .close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #94a3b8;
+    transition: color 0.3s ease;
+  }
+
+  .btn {
+    background: #6366f1;
+    color: white;
+    padding: 0.6rem 1.8rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+</style>
+
+<script is:inline define:vars={{ projects }}>
+  // We pass the 'projects' data from Astro into the client-side script
+  window.openProject = function(id) {
+    const data = projects.find(p => p.id === id);
+    const modal = document.getElementById('project-modal');
+
+    if (data && modal) {
+      document.getElementById('modal-title').innerText = data.title;
+      document.getElementById('modal-year').innerText = data.year || "2025"; 
+      document.getElementById('modal-role').innerText = data.role || "Developer";
+      document.getElementById('modal-tools').innerText = data.tech.join(', ');
+      document.getElementById('modal-desc').innerText = data.description;
+      document.getElementById('modal-img').src = data.image;
+      document.getElementById('modal-link').href = data.link;
+      document.getElementById('modal-link').innerText = data.linkText;
+
+      modal.style.display = "flex";
+      document.body.style.overflow = "hidden";
+    }
+  };
+
+  window.closeModal = function() {
+    const modal = document.getElementById('project-modal');
+    if (modal) {
+      modal.style.display = "none";
+      document.body.style.overflow = "auto";
+    }
+  };
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+</script>

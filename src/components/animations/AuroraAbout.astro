@@ -1,0 +1,63 @@
+---
+---
+<div class="aurora-container">
+  <div class="aurora-content">
+    <slot />
+  </div>
+  <div class="aurora-background"></div>
+</div>
+
+<style>
+  .aurora-container {
+    position: relative;
+    width: 100%;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 2rem;
+    padding: 3rem;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .aurora-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* The "Aurora" Animation */
+  .aurora-background {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle at center,
+      rgba(99, 102, 241, 0.2) 0%,
+      rgba(165, 180, 252, 0.15) 30%,
+      rgba(99, 102, 241, 0.1) 50%,
+      transparent 70%
+    );
+    filter: blur(60px);
+    animation: aurora-rotate 20s linear infinite;
+    z-index: -1;
+    opacity: 0.8;
+  }
+
+  @keyframes aurora-rotate {
+    from { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.2); }
+    to { transform: rotate(360deg) scale(1); }
+  }
+
+  /* Subtle adjustments for Light Mode */
+  :global(html.light) .aurora-background {
+    background: radial-gradient(
+      circle at center,
+      rgba(99, 102, 241, 0.12) 0%,
+      rgba(165, 180, 252, 0.08) 50%,
+      transparent 80%
+    );
+    opacity: 0.5;
+  }
+</style>

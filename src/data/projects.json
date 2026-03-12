@@ -1,0 +1,32 @@
+[
+  {
+    "id": "gymbuddy",
+    "category": "AI & Python",
+    "title": "GymBuddy",
+    "description": "AI Computer Vision system for workout form detection using YOLOv8 and LSTM models. Evaluated with 30 participants for real-time accuracy.",
+    "tech": ["YOLOv8", "Python", "LSTM"],
+    "image": "/pics/gym.buddy.jpeg",
+    "link": "https://gym-buddy.me/",
+    "linkText": "Visit Live Site"
+  },
+  {
+    "id": "mags",
+    "category": "Web Systems",
+    "title": "3D Mags System",
+    "description": "Architecture firm appointment and management platform. Focused on system testing and technical specification logging.",
+    "tech": ["PHP", "MySQL"],
+    "image": "/pics/3d.mags.jpg",
+    "link": "https://github.com/phrxnc/3DMags.git",
+    "linkText": "View GitHub Repo"
+  },
+  {
+    "id": "edusolve",
+    "category": "LMS Platform",
+    "title": "EDUSOLVE",
+    "description": "Online learning management platform built with Astro. Focused on UI/UX consistency in Figma and smooth user flow.",
+    "tech": ["Astro", "UI/UX", "Figma"],
+    "image": "/pics/edu.solve.jpeg",
+    "link": "https://github.com/asxpsittiie",
+    "linkText": "View Profile"
+  }
+]

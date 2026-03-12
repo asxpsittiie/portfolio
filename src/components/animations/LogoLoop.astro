@@ -1,0 +1,73 @@
+---
+const socials = [
+  { icon: "fa-envelope", class: "gmail" },
+  { icon: "fa-github", class: "github" },
+  { icon: "fa-linkedin", class: "linkedin" },
+  { icon: "fa-facebook", class: "facebook" },
+  // Duplicate for seamless infinite loop
+  { icon: "fa-envelope", class: "gmail" },
+  { icon: "fa-github", class: "github" },
+  { icon: "fa-linkedin", class: "linkedin" },
+  { icon: "fa-facebook", class: "facebook" },
+];
+---
+
+<div class="velocity-container">
+  <div class="scroller-track">
+    {socials.map((s) => (
+      <div class={`social-item ${s.class}`}>
+        <i class={`fa-brands ${s.icon}`}></i>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .velocity-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 2rem 0;
+    /* This creates the professional "fade out" on the sides */
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 15%,
+      black 85%,
+      transparent
+    );
+  }
+
+  .scroller-track {
+    display: flex;
+    width: max-content;
+    gap: 4rem;
+    animation: scroll-velocity 25s linear infinite;
+  }
+
+  @keyframes scroll-velocity {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .scroller-track:hover {
+    animation-play-state: paused;
+  }
+
+  .social-item {
+    font-size: 2.5rem;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .social-item:hover {
+    color: var(--accent-color);
+    transform: scale(1.2);
+  }
+
+  /* Fix for light mode visibility */
+  :global(html.light) .social-item {
+    color: #1e293b;
+  }
+</style>
